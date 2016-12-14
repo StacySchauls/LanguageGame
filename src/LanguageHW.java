@@ -21,10 +21,6 @@ public class LanguageHW
     private JLabel Language, Values, output;
     private JButton search;
     private java.sql.Statement stmt = null;
-    private Map<String,String> map = null;
-    private int id, lang_id, meaning_id;
-    private String langname,word;
-
     /**
      * Constructor, creates our window with the proper components
      */
@@ -136,84 +132,27 @@ public class LanguageHW
     
    public void application()
    {
-       Map<String,Map<Integer, String>> map;
+        Map<String,Map<Integer, String>> map;
         map = new HashMap<String, Map<Integer,String>>();
-        Map<Integer, String> map2;
-        map2 = new HashMap<Integer, String>();
-        
-       //queries
-       String sql5 = "SELECT langname FROM Language";
-       String sql = "SELECT ID FROM Language";
-       String sql2 = "SELECT lang_id FROM Vocab";
-       String sql3 = "SELECT meaning_id FROM Vocab";
-       String sql4 = "SELECT word FROM Vocab";
+        String sql = "SELECT langname, meaning_id, word FROM Vocab "
+                + "INNER JOIN Language ON language.ID = Vocab.lang_id";
      try
      {
-         //query 1
-        
-         //System.out.println("Query5 successful.");
-         
-         
-         java.sql.ResultSet rs1 = stmt.executeQuery(sql);
-         //System.out.println("Query1 successful.");
-         while(rs1.next())
-         {
-              id = rs1.getInt("ID");
-         }
-         java.sql.ResultSet rs2 = stmt.executeQuery(sql2);
-         //System.out.println("Query2 successful.");
-         while(rs2.next())
-         {
-              lang_id = rs2.getInt("lang_id");
-         }
-         
-         //System.out.println("Query3 successful.");
-         //while(rs3.next())
-         {
-             
-         }
-         java.sql.ResultSet rs3 = stmt.executeQuery(sql3);
-         java.sql.ResultSet rs4 = stmt.executeQuery(sql4);
-         java.sql.ResultSet rs5 = stmt.executeQuery(sql5);
-         
-         //System.out.println("Query4 successful.");
-         
-         
-             
-         
-         while(rs5.next())
-         {
-            langname = rs5.getString("langName");
-            while(rs3.next())
+        java.sql.ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next())
+        {
+            String langName = rs.getString("langname");
+            int meaning_id = rs.getInt("meaning_id");
+            String word = rs.getString("word");
+            
+            if(! map.containsKey(langName))
             {
-                meaning_id = rs3.getInt("meaning_id");
-                  
-                
-                   if(rs4.next())
-                    {
-                        while(meaning_id <10)
-                        {
-                        word = rs4.getNString("word");
-                        System.out.println(word);
-                        System.out.println(meaning_id);
-                        map2.put(meaning_id, word);
-                       // map.put(langname, map2);
-                       meaning_id ++;
-                        }
-                        
-                    }
-
-                
-                  
+                map.put(langName, new HashMap<Integer, String>());
             }
-         }
-       for(int key : map2.keySet())
-       {
-           //System.out.println(key);
-           //System.out.println(map2.get(key));
-       }
-         
-          //System.out.println("App. query successful");
+            map.get(langName).put(meaning_id, word);
+        }
+        System.out.println(map.size());
+        
      }catch(Exception e)
      {
          System.err.println("App query failed: "+e.getMessage());
