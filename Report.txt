@@ -1,0 +1,11 @@
+Stacy Schauls	Cpts131 Homework Week 15 Challenge Version	
+
+1. I got started with this assignment by first drawing a picture of how this mapping should work. Needless
+to say it wasnt a very good picture.
+
+2. What worked was fully thinking through the process, thinking how I would implement this if I were
+to do it on pen and paper. What didnt work was trying to rush through it and get it done.
+	
+3. I learned how to map and think more critically about problems. Also how to access and use SQL more efficiently
+
+4. Next time I will create a smaller project, mentally and ask myself how I would go about solving the problem. 
